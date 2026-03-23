@@ -6,6 +6,8 @@ AnsiConsole.MarkupLine("[red]IMPORTANT: Make you have EF Core installed: `dotnet
 AnsiConsole.MarkupLine("\n");
 var connectionString = AnsiConsole.Ask<string>("Enter connection string:");
 
+var noDbContext = args.Contains("--no-dbcontext");
+
 var tableService = new TableService();
 var tables = await tableService.GetTablesAsync(connectionString);
 AnsiConsole.MarkupLine("[green]✔ Connected to database[/]");
@@ -29,7 +31,7 @@ AnsiConsole.MarkupLine("[green]Generating entities...[/]");
 
 try
 {
-    scaffoldService.Run(connectionString, selectedTables);
+    scaffoldService.Run(connectionString, selectedTables, noDbContext);
 }
 catch (Exception ex)
 {

@@ -40,5 +40,9 @@ Select tables
 Done.
 The C# Entities were created under ./Entities.
 ```
+## CLI Flags 
+- `dotnet run -- --no-dbcontext` - Get rid of DbContext.cs file
+ 
+
 
 **Note:** IMPORTANT: Make you have EF Core installed: `dotnet tool install --global dotnet-ef`

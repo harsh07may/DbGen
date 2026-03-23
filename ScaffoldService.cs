@@ -3,13 +3,23 @@ using System.Text;
 
 public class ScaffoldService
 {
-    public void Run(string connectionString, IEnumerable<string> tables)
+    public void Run(string connectionString, IEnumerable<string> tables, bool noDbContext)
     {
         var tableArgs = string.Join(" ", tables.Select(t => $"--table {t}"));
 
         var command = $"dotnet ef dbcontext scaffold \"{connectionString}\" Microsoft.EntityFrameworkCore.SqlServer {tableArgs} --output-dir Entities --no-onconfiguring --force";
 
         Execute(command);
+
+        if (noDbContext)
+        {
+            var files = Directory.GetFiles("Entities", "*Context.cs");
+
+            foreach (var file in files)
+            {
+                File.Delete(file);
+            }
+        }
     }
 
     private void Execute(string command)
